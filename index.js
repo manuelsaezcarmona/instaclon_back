@@ -18,6 +18,11 @@ app.use(express.json());
 // public directory, page in server
 app.use(express.static('public'));
 /** Server Up */
+
+/* --- ROUTES ---- */
+
+app.use('/user', require('./routes/user.routes'));
+
 app.listen(process.env.port, () => {
   console.log(`Server up in port: ${process.env.PORT}`);
 });

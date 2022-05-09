@@ -14,7 +14,7 @@ const UserSchema = Schema({
     type: String,
     required: true
   },
-  postsuser: [
+  posts: [
     {
       type: Schema.Types.ObjectId,
       required: true,
