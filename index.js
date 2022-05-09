@@ -9,6 +9,12 @@ const app = express();
 dbConexion();
 
 /** Middlewares */
+// Security
+app.use(cors());
+// Request information from server
+app.use(morgan('dev'));
+// read and Parse body request (from POST and PUT request)
+app.use(express.json());
 // public directory, page in server
 app.use(express.static('public'));
 /** Server Up */
