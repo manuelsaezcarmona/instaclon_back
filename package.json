@@ -1,0 +1,48 @@
+{
+  "name": "instaclon_back",
+  "version": "0.0.9",
+  "description": "BackEnd de InstaClon, clon de instagram",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=prod nodemon",
+    "dev": "cross-env NODE_ENV=dev nodemon",
+    "test": "cross-env NODE_ENV=test jest --watchAll",
+    "testcover": "cross-env NODE_ENV=test jest --watchAll --collect-coverage",
+    "lint": "eslint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:manuelsaezcarmona/instaclon_back.git"
+  },
+  "keywords": [
+    "insta",
+    "clon",
+    "social",
+    "network"
+  ],
+  "author": "Manuel Saez Carmona",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.15.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^28.1.0",
+    "lint": "^0.7.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.3.3",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.16"
+  },
+    "prettier": {
+    "singleQuote": true
+    }
+}
