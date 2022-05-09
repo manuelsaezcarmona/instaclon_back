@@ -42,7 +42,8 @@
     "morgan": "^1.10.0",
     "nodemon": "^2.0.16"
   },
-    "prettier": {
-    "singleQuote": true
-    }
+  "prettier": {
+    "singleQuote": true,
+    "arrowParens": "always"
+  }
 }
