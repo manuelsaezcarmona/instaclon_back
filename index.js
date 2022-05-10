@@ -3,7 +3,9 @@ require('dotenv').config();
 const morgan = require('morgan');
 const cors = require('cors');
 const { dbConexion } = require('./config/db.config');
+
 const usersRouter = require('./routes/user.routes');
+const authRouter = require('./routes/auth.routes');
 
 const app = express();
 /** DB connection */
@@ -23,6 +25,7 @@ app.use(express.static('public'));
 /* --- ROUTES ---- */
 
 app.use('/user', usersRouter);
+app.use('/auth', authRouter);
 
 app.listen(process.env.port, () => {
   console.log(`Server up in port: ${process.env.PORT}`);
