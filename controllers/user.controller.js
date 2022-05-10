@@ -30,6 +30,7 @@ const addUser = async (req, res) => {
       ok: true,
       msg: 'create user',
       username: newUser.username,
+      newUser,
     });
   } catch (error) {
     res.status(500).json({
