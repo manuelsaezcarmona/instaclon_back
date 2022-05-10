@@ -9,6 +9,9 @@
     "sourceType": "module"
   },
   "rules": {
-    "comma-dangle": "off"
+    "comma-dangle": "off",
+    "consistent-return": "off",
+    "no-underscore-dangle": "off",
+    "no-param-reassign": "off"
   }
 }

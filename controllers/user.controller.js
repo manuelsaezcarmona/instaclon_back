@@ -45,7 +45,10 @@ const getUserById = async (req, res) => {
     });
   }
   try {
-    const user = await User.findById(id);
+    const user = await User.findById(id).populate('posts', {
+      imageURL: 1,
+      text: 1,
+    });
     res.status(200).json({
       ok: true,
       user,
