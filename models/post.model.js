@@ -3,33 +3,23 @@ const { Schema, model } = require('mongoose');
 const PostSchema = Schema({
   imagepost: {
     type: String,
-    required: true
+    required: true,
   },
   textpost: {
-    type: String
+    type: String,
   },
   userID: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'User'
+    ref: 'User',
   },
   comments: [
     {
-      commentID: {
-        type: Schema.Types.ObjectId,
-        required: true
-      },
-      usercommentID: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: 'User'
-      },
-      textcomment: {
-        type: String,
-        required: true
-      }
-    }
-  ]
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'Comment',
+    },
+  ],
 });
 
 module.exports = model('Post', PostSchema);
