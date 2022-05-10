@@ -15,22 +15,18 @@ const addUser = async (req, res) => {
         msg: 'Ya existe un usuario con ese correo',
       });
     }
-    const userContent = { username, email, password };
-    userContent.posts = [];
-    userContent.comments = [];
 
-    const newUser = new User(userContent);
+    const newUser = new User({ username, email, password });
 
     const salt = bcrypt.genSaltSync();
-    newUser.password = bcrypt.hashSync(userContent.password, salt);
+    newUser.password = bcrypt.hashSync(password, salt);
 
     await newUser.save();
 
     return res.status(201).json({
       ok: true,
       msg: 'create user',
-      username: newUser.username,
-      newUser,
+      username,
     });
   } catch (error) {
     res.status(500).json({

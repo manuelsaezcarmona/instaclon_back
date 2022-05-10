@@ -1,11 +1,11 @@
 const { Schema, model } = require('mongoose');
 
 const PostSchema = Schema({
-  imagepost: {
+  imageURL: {
     type: String,
     required: true,
   },
-  textpost: {
+  text: {
     type: String,
   },
   userID: {
@@ -22,4 +22,12 @@ const PostSchema = Schema({
   ],
 });
 
+PostSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id;
+
+    delete returnedObject._id;
+    delete returnedObject._v;
+  },
+});
 module.exports = model('Post', PostSchema);
