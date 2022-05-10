@@ -18,7 +18,7 @@ const deletePostToUser = async (userid, postid) => {
     const postFiltered = user.posts
       .map((post) => post.toString())
       .filter((id) => id !== postid);
-    console.log(postFiltered);
+
     user.posts = postFiltered;
     await user.save();
   } catch (error) {
@@ -88,6 +88,43 @@ const deletePost = async (req, res) => {
   }
 };
 
+const updatePost = async (req, res) => {
+  const { id } = req.user;
+  const { postid } = req.params;
+
+  try {
+    const post = await Post.findById(postid);
+
+    if (!post) {
+      return res.status(404).json({
+        ok: false,
+        msg: 'this post does not exist',
+      });
+    }
+    if (post.userID.toString() !== id) {
+      return res.status(401).json({
+        ok: false,
+        msg: 'you do not have permission to edit this post',
+      });
+    }
+
+    const postUpdated = await Post.findByIdAndUpdate(postid, req.body, {
+      new: true,
+    });
+
+    return res.status(200).json({
+      ok: true,
+      msg: 'post updated',
+      post: postUpdated,
+    });
+  } catch (error) {
+    res.status(500).json({
+      ok: false,
+      msg: `Please contact the administrator ${error.message}`,
+    });
+  }
+};
+
 const getAllPosts = async (req, res) => {
   try {
     const posts = await Post.find().populate('userID', {
@@ -108,4 +145,9 @@ const getAllPosts = async (req, res) => {
   }
 };
 
-module.exports = { addPost, getAllPosts, deletePost };
+module.exports = {
+  addPost,
+  getAllPosts,
+  deletePost,
+  updatePost,
+};
