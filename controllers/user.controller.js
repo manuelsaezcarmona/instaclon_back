@@ -58,6 +58,28 @@ const getUserById = async (req, res) => {
   }
 };
 
-const updateUser = async (req, res) => {};
+const updateUser = async (req, res) => {
+  const { id } = req.user;
+  if (!id) {
+    return res.status(400).json({
+      ok: false,
+      msg: 'userid not found',
+    });
+  }
+  try {
+    const updatedUser = await User.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+    res.status(200).json({
+      ok: true,
+      updatedUser,
+    });
+  } catch (error) {
+    res.status(500).json({
+      ok: false,
+      msg: `Please contact the administrator ${error.message}`,
+    });
+  }
+};
 
-module.exports = { addUser, getUserById };
+module.exports = { addUser, getUserById, updateUser };
