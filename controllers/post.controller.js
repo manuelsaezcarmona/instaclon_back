@@ -11,6 +11,21 @@ const addPostToUser = async (userid, postid) => {
   }
 };
 
+const deletePostToUser = async (userid, postid) => {
+  try {
+    const user = await User.findById(userid);
+
+    const postFiltered = user.posts
+      .map((post) => post.toString())
+      .filter((id) => id !== postid);
+    console.log(postFiltered);
+    user.posts = postFiltered;
+    await user.save();
+  } catch (error) {
+    return error.message;
+  }
+};
+
 const addPost = async (req, res) => {
   // TODO - verificar que todos los datos estan en el body
   const { imageURL, text } = req.body;
@@ -18,14 +33,52 @@ const addPost = async (req, res) => {
 
   const post = new Post({ imageURL, text, userID: id });
   try {
-    const postcreated = await post.save();
+    const newPost = await post.save();
 
-    await addPostToUser(id, postcreated.id);
+    await addPostToUser(id, newPost.id);
 
     return res.status(201).json({
       ok: true,
       msg: 'create post',
       post,
+    });
+  } catch (error) {
+    res.status(500).json({
+      ok: false,
+      msg: `Please contact the administrator ${error.message}`,
+    });
+  }
+};
+
+const deletePost = async (req, res) => {
+  const { id } = req.user;
+  const { postid } = req.params;
+
+  try {
+    const post = await Post.findById(postid);
+
+    if (!post) {
+      return res.status(404).json({
+        ok: false,
+        msg: 'this post does not exist',
+      });
+    }
+
+    if (post.userID.toString() !== id) {
+      return res.status(401).json({
+        ok: false,
+        msg: 'you do not have permission to delete this post',
+      });
+    }
+
+    const postDeleted = await Post.findByIdAndDelete(postid);
+
+    await deletePostToUser(id, postDeleted.id);
+
+    return res.status(200).json({
+      ok: true,
+      msg: 'post deleted',
+      post: postDeleted,
     });
   } catch (error) {
     res.status(500).json({
@@ -55,4 +108,4 @@ const getAllPosts = async (req, res) => {
   }
 };
 
-module.exports = { addPost, getAllPosts };
+module.exports = { addPost, getAllPosts, deletePost };
