@@ -12,7 +12,7 @@ const addUser = async (req, res) => {
     if (user) {
       return res.status(400).json({
         ok: false,
-        msg: 'Ya existe un usuario con ese correo',
+        msg: 'user exists whith this email',
       });
     }
 
@@ -36,4 +36,26 @@ const addUser = async (req, res) => {
   }
 };
 
-module.exports = { addUser };
+const getUserById = async (req, res) => {
+  const { id } = req.params;
+  if (!id) {
+    return res.status(400).json({
+      ok: false,
+      msg: 'userid not found',
+    });
+  }
+  try {
+    const user = await User.findById(id);
+    res.status(200).json({
+      ok: true,
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      ok: false,
+      msg: `Please contact the administrator ${error.message}`,
+    });
+  }
+};
+
+module.exports = { addUser, getUserById };
