@@ -14,7 +14,8 @@ const logUser = async (req, res) => {
       });
     }
 
-    const validPassword = bcrypt.compareSync(password, user.password);
+    // const validPassword = bcrypt.compareSync(password, user.password);
+    const validPassword = await bcrypt.compare(password, user.password);
 
     if (!validPassword) {
       return res.status(400).json({

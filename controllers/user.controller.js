@@ -37,7 +37,7 @@ const addUser = async (req, res) => {
 };
 
 const getUserById = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.user;
   if (!id) {
     return res.status(400).json({
       ok: false,
@@ -57,5 +57,7 @@ const getUserById = async (req, res) => {
     });
   }
 };
+
+const updateUser = async (req, res) => {};
 
 module.exports = { addUser, getUserById };
