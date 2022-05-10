@@ -16,5 +16,12 @@ const CommentSchema = Schema({
     ref: 'Post',
   },
 });
+CommentSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id;
 
+    delete returnedObject._id;
+    delete returnedObject._v;
+  },
+});
 module.exports = model('Comment', CommentSchema);

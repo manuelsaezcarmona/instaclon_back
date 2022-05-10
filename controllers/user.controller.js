@@ -12,25 +12,21 @@ const addUser = async (req, res) => {
     if (user) {
       return res.status(400).json({
         ok: false,
-        msg: 'Ya existe un usuario con ese correo',
+        msg: 'user exists whith this email',
       });
     }
-    const userContent = { username, email, password };
-    userContent.posts = [];
-    userContent.comments = [];
 
-    const newUser = new User(userContent);
+    const newUser = new User({ username, email, password });
 
     const salt = bcrypt.genSaltSync();
-    newUser.password = bcrypt.hashSync(userContent.password, salt);
+    newUser.password = bcrypt.hashSync(password, salt);
 
     await newUser.save();
 
     return res.status(201).json({
       ok: true,
       msg: 'create user',
-      username: newUser.username,
-      newUser,
+      username,
     });
   } catch (error) {
     res.status(500).json({
@@ -40,4 +36,26 @@ const addUser = async (req, res) => {
   }
 };
 
-module.exports = { addUser };
+const getUserById = async (req, res) => {
+  const { id } = req.params;
+  if (!id) {
+    return res.status(400).json({
+      ok: false,
+      msg: 'userid not found',
+    });
+  }
+  try {
+    const user = await User.findById(id);
+    res.status(200).json({
+      ok: true,
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      ok: false,
+      msg: `Please contact the administrator ${error.message}`,
+    });
+  }
+};
+
+module.exports = { addUser, getUserById };
