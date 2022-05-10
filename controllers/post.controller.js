@@ -1,4 +1,15 @@
 const Post = require('../models/post.model');
+const User = require('../models/user.model');
+
+const addPostToUser = async (userid, postid) => {
+  try {
+    const user = await User.findById(userid);
+    user.posts = [...user.posts, postid];
+    await user.save();
+  } catch (error) {
+    return error.message;
+  }
+};
 
 const addPost = async (req, res) => {
   // TODO - verificar que todos los datos estan en el body
@@ -7,7 +18,9 @@ const addPost = async (req, res) => {
 
   const post = new Post({ imageURL, text, userID: id });
   try {
-    await post.save();
+    const postcreated = await post.save();
+
+    await addPostToUser(id, postcreated.id);
 
     return res.status(201).json({
       ok: true,
@@ -24,7 +37,11 @@ const addPost = async (req, res) => {
 
 const getAllPosts = async (req, res) => {
   try {
-    const posts = await Post.find();
+    const posts = await Post.find().populate('userID', {
+      username: 1,
+      email: 1,
+      avatarURL: 1,
+    });
 
     return res.status(200).json({
       ok: true,
