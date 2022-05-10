@@ -19,7 +19,7 @@ const authorizeToken = (req, res, next) => {
     if (authorization && authorization.toLowerCase().startsWith('bearer')) {
       token = authorization.substring(7);
       const verified = jwt.verify(token, process.env.SECRET_JWT_SEED);
-      console.log(verified);
+
       req.user = verified;
     }
     next();
