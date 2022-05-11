@@ -22,7 +22,10 @@ const dbConexion = async () => {
   const databaseName = getDataBaseName(process.env.NODE_ENV);
   try {
     const uri = `mongodb+srv://${user}:${pass}${cluster}/${databaseName}`;
-    const conexionMongoose = await mongoose.connect(uri);
+    const conexionMongoose = await mongoose.connect(uri, {
+      UseNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     console.log(`DB Conectada a ${databaseName}`);
     return conexionMongoose;
   } catch (error) {
