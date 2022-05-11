@@ -31,6 +31,6 @@ app.use('/auth', authRouter);
 app.use('/post', postsRouter);
 app.use('/comment', commentRouter);
 
-app.listen(process.env.port, () => {
+app.listen(process.env.PORT, () => {
   console.log(`Server up in port: ${process.env.PORT}`);
 });
