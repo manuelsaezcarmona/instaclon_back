@@ -127,11 +127,21 @@ const updatePost = async (req, res) => {
 
 const getAllPosts = async (req, res) => {
   try {
-    const posts = await Post.find().populate('userID', {
-      username: 1,
-      email: 1,
-      avatarURL: 1,
-    });
+    const posts = await Post.find()
+      .populate('userID', {
+        username: 1,
+        email: 1,
+        avatarURL: 1,
+      })
+      .populate({
+        path: 'comments',
+        model: 'Comment',
+        populate: {
+          path: 'userIDcomment',
+          model: 'User',
+          select: ['username', 'email'],
+        },
+      });
 
     return res.status(200).json({
       ok: true,
