@@ -115,8 +115,18 @@ const deleteComment = async (req, res) => {
 };
 
 const getCommentsByPost = async (req, res) => {
+  const { postID } = req.body;
+
   try {
-    const comments = await Comment.find();
+    const comments = await Comment.find({ postIDcomment: postID })
+      .populate('userIDcomment', {
+        avatarURL: 1,
+        username: 1,
+        email: 1,
+      })
+      .populate('postIDcomment', {
+        text: 1,
+      });
 
     return res.status(201).json({
       ok: true,
@@ -129,4 +139,50 @@ const getCommentsByPost = async (req, res) => {
     });
   }
 };
-module.exports = { addComment, deleteComment, getCommentsByPost };
+
+const updateComment = async (req, res) => {
+  const { id } = req.user;
+  const { commentid } = req.params;
+
+  try {
+    const comment = await Comment.findById(commentid);
+
+    if (!comment) {
+      return res.status(404).json({
+        ok: false,
+        msg: 'this comment does not exist',
+      });
+    }
+
+    if (comment.userIDcomment.toString() !== id) {
+      return res.status(401).json({
+        ok: false,
+        msg: 'you do not have permission to edit this comment',
+      });
+    }
+
+    const commentUpdated = await Comment.findByIdAndUpdate(
+      commentid,
+      req.body,
+      { new: true }
+    );
+
+    return res.status(200).json({
+      ok: true,
+      msg: 'comment updated',
+      comment: commentUpdated,
+    });
+  } catch (error) {
+    res.status(500).json({
+      ok: false,
+      msg: `Please contact the administrator ${error.message}`,
+    });
+  }
+};
+
+module.exports = {
+  addComment,
+  deleteComment,
+  getCommentsByPost,
+  updateComment,
+};
