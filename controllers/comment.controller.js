@@ -113,4 +113,20 @@ const deleteComment = async (req, res) => {
     });
   }
 };
-module.exports = { addComment, deleteComment };
+
+const getCommentsByPost = async (req, res) => {
+  try {
+    const comments = await Comment.find();
+
+    return res.status(201).json({
+      ok: true,
+      comments,
+    });
+  } catch (error) {
+    res.status(500).json({
+      ok: false,
+      msg: `Please contact the administrator ${error.message}`,
+    });
+  }
+};
+module.exports = { addComment, deleteComment, getCommentsByPost };

@@ -49,7 +49,7 @@ const getUserById = async (req, res) => {
       imageURL: 1,
       text: 1,
     });
-    res.status(200).json({
+    return res.status(200).json({
       ok: true,
       user,
     });
