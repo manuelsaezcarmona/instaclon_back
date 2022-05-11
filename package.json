@@ -4,7 +4,7 @@
   "description": "BackEnd de InstaClon, clon de instagram",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=prod nodemon",
+    "start": "node index.js",
     "dev": "cross-env NODE_ENV=dev nodemon",
     "test": "cross-env NODE_ENV=test jest --watchAll",
     "testcover": "cross-env NODE_ENV=test jest --watchAll --collect-coverage",
