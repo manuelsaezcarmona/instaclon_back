@@ -11,7 +11,7 @@ const getDataBaseName = (enviroment) => {
       return process.env.DB_NAME_TEST;
 
     default:
-      return process.env.DB_NAME_DEV;
+      return process.env.DB_NAME_PROD;
   }
 };
 
