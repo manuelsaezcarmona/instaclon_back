@@ -4,16 +4,19 @@
   "description": "BackEnd de InstaClon, clon de instagram",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=dev nodemon",
-    "prod": "cross-env NODE_ENV=production nodemon",
-    "test": "cross-env NODE_ENV=test jest",
-    "testcover": "cross-env NODE_ENV=test jest --watchAll --collect-coverage"
+    "start": "node index.js",
+    "dev": "node index.js"
   },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com:manuelsaezcarmona/instaclon_back.git"
   },
-  "keywords": ["insta", "clon", "social", "network"],
+  "keywords": [
+    "insta",
+    "clon",
+    "social",
+    "network"
+  ],
   "author": "Manuel Saez Carmona",
   "license": "ISC",
   "devDependencies": {

@@ -5,7 +5,7 @@ const getDataBaseName = (enviroment) => {
   switch (enviroment) {
     case 'dev':
       return process.env.DB_NAME_DEV;
-    case 'prod':
+    case 'production':
       return process.env.DB_NAME_PROD;
     case 'test':
       return process.env.DB_NAME_TEST;
