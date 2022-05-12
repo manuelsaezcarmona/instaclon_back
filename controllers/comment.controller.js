@@ -126,6 +126,8 @@ const getCommentsByPost = async (req, res) => {
       })
       .populate('postIDcomment', {
         text: 1,
+        createdAt: 1,
+        updatedAt: 1,
       });
 
     return res.status(201).json({
