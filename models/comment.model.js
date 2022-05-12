@@ -1,21 +1,24 @@
 const { Schema, model } = require('mongoose');
 
-const CommentSchema = Schema({
-  content: {
-    type: String,
-    required: true,
+const CommentSchema = Schema(
+  {
+    content: {
+      type: String,
+      required: true,
+    },
+    userIDcomment: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'User',
+    },
+    postIDcomment: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'Post',
+    },
   },
-  userIDcomment: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: 'User',
-  },
-  postIDcomment: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: 'Post',
-  },
-});
+  { timestamps: true }
+);
 CommentSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id;

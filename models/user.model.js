@@ -1,37 +1,40 @@
 const { Schema, model } = require('mongoose');
 
-const UserSchema = Schema({
-  username: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  avatarURL: {
-    type: String,
-  },
-  posts: [
-    {
-      type: Schema.Types.ObjectId,
+const UserSchema = Schema(
+  {
+    username: {
+      type: String,
       required: true,
-      ref: 'Post',
     },
-  ],
-  comments: [
-    {
-      type: Schema.Types.ObjectId,
+    email: {
+      type: String,
       required: true,
-      ref: 'Comment',
+      unique: true,
     },
-  ],
-});
+    password: {
+      type: String,
+      required: true,
+    },
+    avatarURL: {
+      type: String,
+    },
+    posts: [
+      {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'Post',
+      },
+    ],
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'Comment',
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
 UserSchema.set('toJSON', {
   transform: (document, returnedObject) => {

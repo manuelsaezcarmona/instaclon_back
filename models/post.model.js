@@ -1,26 +1,29 @@
 const { Schema, model } = require('mongoose');
 
-const PostSchema = Schema({
-  imageURL: {
-    type: String,
-    required: true,
-  },
-  text: {
-    type: String,
-  },
-  userID: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: 'User',
-  },
-  comments: [
-    {
+const PostSchema = Schema(
+  {
+    imageURL: {
+      type: String,
+      required: true,
+    },
+    text: {
+      type: String,
+    },
+    userID: {
       type: Schema.Types.ObjectId,
       required: true,
-      ref: 'Comment',
+      ref: 'User',
     },
-  ],
-});
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'Comment',
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
 PostSchema.set('toJSON', {
   transform: (document, returnedObject) => {
