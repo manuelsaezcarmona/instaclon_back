@@ -10,7 +10,7 @@ const {
 
 commentRouter.post('/add', authorizeToken, addComment);
 commentRouter.delete('/delete/:commentid', authorizeToken, deleteComment);
-commentRouter.get('/', authorizeToken, getCommentsByPost);
+commentRouter.get('/:postID', authorizeToken, getCommentsByPost);
 commentRouter.patch('/update/:commentid', authorizeToken, updateComment);
 
 module.exports = commentRouter;

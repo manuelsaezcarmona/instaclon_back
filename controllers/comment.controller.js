@@ -115,7 +115,7 @@ const deleteComment = async (req, res) => {
 };
 
 const getCommentsByPost = async (req, res) => {
-  const { postID } = req.body;
+  const { postID } = req.params;
 
   try {
     const comments = await Comment.find({ postIDcomment: postID })
@@ -135,7 +135,7 @@ const getCommentsByPost = async (req, res) => {
       comments,
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       ok: false,
       msg: `Please contact the administrator ${error.message}`,
     });
