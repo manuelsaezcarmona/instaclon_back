@@ -130,6 +130,7 @@ const getAllPosts = async (req, res) => {
     const posts = await Post.find()
       .populate('userID', {
         username: 1,
+        fullname: 1,
         email: 1,
         avatarURL: 1,
       })
@@ -139,7 +140,7 @@ const getAllPosts = async (req, res) => {
         populate: {
           path: 'userIDcomment',
           model: 'User',
-          select: ['username', 'email'],
+          select: ['username', 'fullname', 'email'],
         },
       });
 

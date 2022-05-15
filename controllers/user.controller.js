@@ -4,7 +4,7 @@ const User = require('../models/user.model');
 
 // eslint-disable-next-line consistent-return
 const addUser = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, fullname, email, password } = req.body;
 
   try {
     const user = await User.findOne({ email });
@@ -16,7 +16,12 @@ const addUser = async (req, res) => {
       });
     }
 
-    const newUser = new User({ username, email, password });
+    const newUser = new User({
+      username,
+      fullname,
+      email,
+      password,
+    });
 
     const salt = bcrypt.genSaltSync();
     newUser.password = bcrypt.hashSync(password, salt);

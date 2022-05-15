@@ -122,6 +122,7 @@ const getCommentsByPost = async (req, res) => {
       .populate('userIDcomment', {
         avatarURL: 1,
         username: 1,
+        fullname: 1,
         email: 1,
       })
       .populate('postIDcomment', {
