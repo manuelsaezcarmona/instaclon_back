@@ -140,7 +140,7 @@ const getAllPosts = async (req, res) => {
         populate: {
           path: 'userIDcomment',
           model: 'User',
-          select: ['username', 'fullname', 'email'],
+          select: ['username', 'fullname', 'email', 'avatarURL'],
         },
       });
 
