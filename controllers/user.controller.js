@@ -55,8 +55,14 @@ const getUserById = async (req, res) => {
       .populate('posts', {
         imageURL: 1,
         text: 1,
+        createdAt: 1,
+        updatedAt: 1,
       })
-      .populate('comments', { content: 1 });
+      .populate('comments', {
+        content: 1,
+        createdAt: 1,
+        updatedAt: 1,
+      });
     return res.status(200).json({
       ok: true,
       user,
