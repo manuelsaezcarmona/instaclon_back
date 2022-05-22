@@ -183,9 +183,28 @@ const updateComment = async (req, res) => {
   }
 };
 
+const getCommentById = async (req, res) => {
+  const { commentID } = req.params;
+
+  try {
+    const comment = await Comment.findById(commentID);
+
+    return res.status(201).json({
+      ok: true,
+      comment,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      ok: false,
+      msg: `Please contact the administrator ${error.message}`,
+    });
+  }
+};
+
 module.exports = {
   addComment,
   deleteComment,
   getCommentsByPost,
   updateComment,
+  getCommentById,
 };
