@@ -187,7 +187,18 @@ const getCommentById = async (req, res) => {
   const { commentID } = req.params;
 
   try {
-    const comment = await Comment.findById(commentID);
+    const comment = await Comment.findById(commentID)
+      .populate('userIDcomment', {
+        avatarURL: 1,
+        username: 1,
+        fullname: 1,
+        email: 1,
+      })
+      .populate('postIDcomment', {
+        text: 1,
+        createdAt: 1,
+        updatedAt: 1,
+      });
 
     return res.status(201).json({
       ok: true,
